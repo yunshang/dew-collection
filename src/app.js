@@ -20,6 +20,7 @@ class App extends Component {
       'pages/home/index',
       'pages/work/index',
       'pages/user/index',
+      'pages/detail/index',
     ],
     window: {
       backgroundTextStyle: 'light',
