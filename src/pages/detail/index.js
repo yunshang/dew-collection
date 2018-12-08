@@ -25,45 +25,36 @@ export default class Detail extends Component {
     this.setState({
       goodsId: this.$router.params.id,
     })
-    this.getGoodsInfo(this.$router.params.id);
+    this.getWorksInfo(this.$router.params.id);
   };
 
-  async getGoodsInfo(goodsId) {
-    const res = await detailApi.getProductInfo({
-      id: goodsId
-    });
-    if (res.status == 'ok') {
-      if (res.data.measurement != null) {
-        res.data.measurement = String(res.data.measurement).split('\n');
-      } else {
-        res.data.measurement = [];
-      }
-      let imgList;
-      if (res.data.image){
-        imgList = res.data.image.map((item) => {
-          return {
-            image_src: item,
-          };
-        });
-      } else {
-        imgList = [{
-          image_src: "http://static-r.msparis.com/uploads/d/1/d1ca37e902e5550ad2c82c721bc216ce.png",
-        }];
-      }
-      Taro.setNavigationBarTitle({
-        title: res.data.name
+  async getWorksInfo(id) {
+    var params = {"query": `{ work(id: ${id}) { id name describe location category model images { id service_url }} }` }
+    const res = await detailApi.getWorkInfo(params);
+    console.log(res.data.work,1111)
+    this.setState({
+      detail: res.data.work,
+    })
+  }
+
+  goToPage = (e) => {
+    if (Taro.getEnv() === Taro.ENV_TYPE.WEB) {
+      Taro.navigateTo({
+        url: e.currentTarget.dataset.url,
       })
-      this.setState({
-        detail: res.data,
-        imageObj: imgList,
-        specificationsList: res.data.specifications,
+    }else {
+      Taro.switchTab({
+        url: e.currentTarget.dataset.url,
       })
     }
   }
 
   render() {
-    const { imageObj } = this.state;
-    const { items } = this.props;
+    console.log(this.state.detail,2222222211)
+    var detail = this.state.detail
+    var imageObj = this.state.detail.images;
+    console.log(imageObj)
+    // const { items } = this.detail;
     return (
       <View className="detail-page">
         <View className="image-box-wrap">
@@ -72,6 +63,35 @@ export default class Detail extends Component {
             <View className="share-btn">
               <Button open-type="share" />
             </View>
+          </View>
+        </View>
+        <View className="container">
+          <View className="info-business-card">
+            <View className="name">
+              {detail.name}
+            </View>
+            <View className="model">
+              {detail.location}
+            </View>
+          </View>
+          <View className="product_name">
+            {detail.describe}
+          </View>
+          <View className="product_name">
+            <View>{detail.category}</View>
+            <View>{detail.category}</View>
+            <View>{detail.category}</View>
+            <View>{detail.category}</View>
+          </View>
+        </View>
+        <View className="detail-bottom-btns">
+          <View className="nav" data-url="/pages/home/index" onClick={this.goToPage}>
+            <Image className="nav-img" src={require('../../images/tab/home.png')} alt="" />
+            首页
+          </View>
+          <View className="nav" data-url="/pages/user/index" onClick={this.goToPage}>
+            <Image className="nav-img" src={require('../../images/tab/user-active.png')} alt="" />
+            我的
           </View>
         </View>
       </View>

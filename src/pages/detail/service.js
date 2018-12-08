@@ -1,7 +1,7 @@
 import Request from '../../utils/request';
 
-export const getProductInfo = params => Request({
-  url: '/product',
-  method: 'GET',
+export const getWorkInfo = params => Request({
+  url: '/graphql',
+  method: 'POST',
   data: params,
 });

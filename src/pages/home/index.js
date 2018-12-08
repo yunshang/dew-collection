@@ -25,9 +25,16 @@ export default class Index extends Component {
     });
   };
 
+  //分享
+  onShareAppMessage() {
+    return {
+      title: 'dew',
+      path: '/pages/home/index',
+    }
+  };
+
   render () {
-    const { products_list, effects } = this.props;
-    console.log(products_list, 111)
+    const { works, effects } = this.props;
     return (
       <View className="home-page">
         <View className="nav-list">
@@ -36,7 +43,7 @@ export default class Index extends Component {
             </View>
         </View>
         <Text className="recommend">留住片刻</Text>
-        <WorksItem list={products_list} loading={effects['home/product']} />
+        <WorksItem list={works} loading={effects['home/product']} />
       </View>
     )
   }

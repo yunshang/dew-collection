@@ -212,7 +212,7 @@
   }
 
   .detail-bottom-btns {
-    box-sizing: border-box;
+    // box-sizing: border-box;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -238,7 +238,7 @@
       background: mix(#fff, #F26D83, 70%);
     }
     .nav {
-      flex: 1;
+      flex: 50%;
       text-align: center;
       font-size: 16px;
       position: relative;

@@ -14,7 +14,14 @@ class WorksItem extends Component {
     deleteClothing: function(){
 
     },
-  };
+  }
+
+  gotoDetail = (e) => {
+    Taro.navigateTo({
+      url: `/pages/detail/index?id=${e.currentTarget.dataset.id}`,
+    })
+  }
+
 
   render() {
     const { list } = this.props;
@@ -23,17 +30,17 @@ class WorksItem extends Component {
         <View className="WhiteSpace"></View>
         <View className="hr"></View>
         {list.map(item => (
-          <View key={item.product_id}>
+          <View key={item.id} data-id={item.id} onClick={ this.gotoDetail }>
             <View className="WhiteSpace"></View>
             <View className="work">
               <View className="shop-img">
-                <Image mode="widthFix" src={`${item.cover_image}`} />
+                <Image mode="widthFix" src={`${item.images[0].service_url}`} />
               </View>
               <View className="content">
-                <View className="title p">{item.brand}</View>
+                <View className="title p">{item.describe}</View>
                 <View className="info p">{item.name}</View>
                 <View className="size p">
-                  {`${item.spu} | ${item.specification || '均码'}`}
+                  {`${item.category} | ${item.model}`}
                 </View>
               </View>
               <View className="edit">

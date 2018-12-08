@@ -27,7 +27,7 @@ export default class MySwiper extends Component {
         autoplay>
         { banner.map((item, index) => (
           <SwiperItem key={index}>
-            <Image mode="widthFix" src={`${item.image_src}!w750`}></Image>
+            <Image mode="widthFix" src={`${item.service_url}`}></Image>
           </SwiperItem>
         ))}
       </Swiper>

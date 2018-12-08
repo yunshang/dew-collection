@@ -24,12 +24,11 @@ export default (options = { method: 'GET', data: {} }) => {
     const { statusCode, data } = res;
     if (statusCode >= 200 && statusCode < 300) {
       if (!noConsole) {
-        console.log(`${new Date().toLocaleString()}【 M=${options.url} 】【接口响应：】`,res.data);
+        console.log(`${new Date().toLocaleString()}【 M=${options.url} 】【接口响应：】`,res.data.data);
       }
-      if (data.status !== 'ok') {
+      if (data.errors !== undefined) {
         Taro.showToast({
-          title: `${res.data.error.message}~` || res.data.error.code,
-          icon: 'none',
+          title: `${data.errors[0].message}~`,
           mask: true,
         });
       }
