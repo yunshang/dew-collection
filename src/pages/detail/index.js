@@ -31,9 +31,9 @@ export default class Detail extends Component {
   async getWorksInfo(id) {
     var params = {"query": `{ work(id: ${id}) { id name describe location category model images { id service_url }} }` }
     const res = await detailApi.getWorkInfo(params);
-    console.log(res.data.work,1111)
     this.setState({
       detail: res.data.work,
+      imageObj: res.data.images
     })
   }
 
@@ -50,16 +50,13 @@ export default class Detail extends Component {
   }
 
   render() {
-    console.log(this.state.detail,2222222211)
     var detail = this.state.detail
     var imageObj = this.state.detail.images;
-    console.log(imageObj)
-    // const { items } = this.detail;
     return (
       <View className="detail-page">
         <View className="image-box-wrap">
           <View className="image-box clearfix">
-            <MySwiper banner={imageObj} />
+            <MySwiper banner={this.state.detail.images} />
             <View className="share-btn">
               <Button open-type="share" />
             </View>
@@ -78,8 +75,6 @@ export default class Detail extends Component {
             {detail.describe}
           </View>
           <View className="product_name">
-            <View>{detail.category}</View>
-            <View>{detail.category}</View>
             <View>{detail.category}</View>
             <View>{detail.category}</View>
           </View>
